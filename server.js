@@ -3,7 +3,7 @@
 //puede volver a invocarse sin miedo a que se reejecute la accion
 //var mongoose=require('./db/mongoDefinition');
 var express = require('express');
-var path = require('path');
+//var path = require('path');
 //var favicon = require('serve-favicon');
 //var logger = require('morgan');
 //var cookieParser = require('cookie-parser');
@@ -13,14 +13,13 @@ var app = express();
 //app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views','app');
-//app.use(express.static(path.join('/app')));
-//app.use('/bower_components',  express.static( path.join('../bower_components')));;
-//app.use(express.static(__dirname + '/public'));
-app.use(express.static('app'));
-app.use('/bower_components',express.static('bower_components'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine','html');
+
+app.use(express.static(__dirname+'/app'));
+app.use('/bower_components',express.static(__dirname+'/bower_components'));
+
+//No es neceasiro el reder para html
+//app.engine('html', require('ejs').renderFile);
+//app.set('view engine','html');
 
 //app.use(cookieParser());
 // Make our db accessible to our router
@@ -48,7 +47,10 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 })
 
-
+app.get('/flema/:id',function(req,resp){
+  console.log(req.params.id);
+  resp.json({data:req.params.id});
+})
 
 
 

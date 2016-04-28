@@ -1,10 +1,8 @@
 /**
  * Created by Camus-122 on 22/04/2016.
  */
-module.exports={
-  init:function(dbInstance){
+module.exports=function(dbInstance){
     return {
-      user: require('../schema/userSchema').create(dbInstance)
+      user: require('./schema/userSchema')(dbInstance)
     }
   }
-}

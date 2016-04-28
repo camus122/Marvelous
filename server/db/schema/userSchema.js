@@ -1,8 +1,7 @@
 // create a schema
 
 
-module.exports={
-  create:function(dbInstance) {
+module.exports=function(dbInstance) {
     var Schema=dbInstance.Schema;
     var userSchema = new Schema({
       name: String,
@@ -43,5 +42,4 @@ module.exports={
     });
 
     return dbInstance.model('User', userSchema);
-  }
-};
+  };
