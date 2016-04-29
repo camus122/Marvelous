@@ -1,7 +1,7 @@
 //REFERENCIAS: https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
 
-var mongoose=require('./db/mongoDefinition');
-var User=mongoose.schemas.user; //recupera el schema
+var mongodb=require('./db/mongoDefinition');
+var User=mongodb.schemas.user; //recupera el schema
 
 //Crea un elemento
 var chris = new User({
