@@ -8,14 +8,14 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" ng-app="singupApp" ng-controller="SingUpController">
 
-  <form class="form-signin">
+  <form class="form-signin" ng-submit="singup()">
     <h2 class="form-signin-heading">Registro</h2>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
-    <input type="username" id="inputUsername" class="form-control" placeholder="Nombre usuario" required="" autofocus="">
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm password" required="" style="margin-bottom: 10px">
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="" ng-model="user.email">
+    <input type="username" id="inputUsername" class="form-control" placeholder="Nombre usuario" required="" autofocus="" ng-model="user.username">
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" ng-model="user.password">
+    <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm password" required="" ng-model="confirmPassword">
     <button class="btn btn-lg btn-success btn-block" type="submit" >Registrar</button>
     <a href="/index.html" class="btn btn-lg btn-primary btn-block">Volver</a>
   </form>
@@ -26,5 +26,6 @@
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bower_components/angular/angular.js"></script>
+<script src="/scripts/controllers/singUpController.js"></script>
 </body>
 </html>

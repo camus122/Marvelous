@@ -5,10 +5,10 @@ angular.module('loginApp', [])
   .controller('LoginController', function($scope,$http) {
         $scope.user={};
         $scope.login=function(){
-          $http.post('/login', $scope.user).then(function(){
-            console.log('logeado!');
+          $http.post('/login', $scope.user).then(function(data){
+            console.log(data.data.msg);
           }, function(err){
-            console.log('error al loguear!');
+            console.log(err.data.msg);
           })
       }
     });

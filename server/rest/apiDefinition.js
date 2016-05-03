@@ -4,31 +4,41 @@
  */
 
 var HttpStatus = require('http-status-codes'); //https://www.npmjs.com/package/http-status-codes
+var userHelper= require('../db/helpers/users');
+var responseTypes= require('../misc/responseTypes');
 module.exports=function(app){
  //var marvelApi=require('./marvel.js')(app);
 
   app.post('/users',function(req, res){
     var user=req.body;
     var db=req.db;
-
-    db.users.findOne({username: user.username},
-      function(err, doc) {
-       console.log('Econtro el dato:'+doc);
-    });
-
-
-    db.users.save(user,function(err,data){
-      console.log('Usuario creado!');
+    userHelper.existUser(db,user.email,function(err,exist){
+      if(!exist){
+        userHelper.saveUser(db,user,function(err,saved){
+          if(saved){
+            res.status(HttpStatus.OK).send(responseTypes.getResponse(HttpStatus.OK,responseTypes.SUCCESS,'Usuario creado con exito!'));
+          }else{
+            console.error('El usuario'+user.email+' no pudo guardarse');
+          }
+        });
+      }else{
+        res.status(HttpStatus.CONFLICT).send(responseTypes.getResponse(HttpStatus.CONFLICT,responseTypes.VALIDATION,'Ya existe un usuario con este mail!'));
+      }
     })
+
   });
 
   app.post('/login',function(req,res){
       var data=req.body;
-      console.log('user logged'+ data);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-        error: HttpStatus.getStatusText(HttpStatus.INTERNAL_SERVER_ERROR)
-      });
-    res.send
+      var db=req.db;
+
+    userHelper.validUser(db,data.email,data.password,function(err,isValid){
+      if(isValid){
+        res.status(HttpStatus.OK).send(responseTypes.getResponse(HttpStatus.OK,responseTypes.SUCCESS,'Login exitoso!'));
+      }else{
+        res.status(HttpStatus.CONFLICT).send(responseTypes.getResponse(HttpStatus.CONFLICT,responseTypes.ERROR,'Usuario invalido'));
+      }
+    })
   });
 
 }
