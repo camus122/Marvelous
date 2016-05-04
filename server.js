@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname+'/app'));
 app.use('/bower_components',express.static(__dirname+'/bower_components'));
 
+app.use('/marvelous',express.static(__dirname+'/app/views/main.html'));
+
 //No es neceasiro el reder para html
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','html');
