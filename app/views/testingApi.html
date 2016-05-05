@@ -39,7 +39,7 @@
         $scope.data.hash=md5($scope.data.ts+privatekey+$scope.data.apikey);
 
         $scope.callUrl=function(){
-          $http.get('http://gateway.marvel.com'+$scope.url, {params:$scope.data}).then(function(value){
+          $http.get('/v1/marvel/characters').then(function(value){
             $scope.response=value.data;
             console.log('exito');
           }, function(err){

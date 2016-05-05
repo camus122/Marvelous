@@ -6,10 +6,10 @@ angular.module('singupApp', [])
     $scope.user={};
 
     $scope.singup=function(){
-      $http.post('/users', $scope.user).then(function(data){
-        console.log(data.data.msg);
+      $http.post('/users', $scope.user).then(function(value){
+        console.log(value.data.response);
       }, function(err){
-        console.error(err.data.msg);
+        console.error(err.data.response);
       })
     }
   });
