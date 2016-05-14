@@ -9,6 +9,20 @@ module.exports= {
   /**
    *
    * @param db
+   * @param name
+   * @param callback(err,exist) {err: error DB, exist:boolean
+     */
+  existGroup:function(db,name,callback) {
+    this.getCollection(db).findOne({name: name},
+      function (err, doc) {
+        if(err!=null) callback(err,null);
+        callback(null,doc!=null);
+      });
+  },
+
+  /**
+   *
+   * @param db
    * @param email
    * @param callback(err,docs) {err: error DB, docs: return all documents
      */
@@ -40,18 +54,21 @@ module.exports= {
   /**
    *
    * @param db
-   * @param group (must have _od to make the match)
-   * @param callback: function(saved) result:boolean
-   * @reference: https://docs.mongodb.org/manual/reference/command/findAndModify/
-   */
-  updateGroup:function(db,group,callback){
-    var data=this.getCollection(db).findAndModify({
-      query: { _id: ObjectId('group._id') },
-      //sort: { rating: 1 },
-      update:  group
+   * @param id
+   * @param callback
+     */
+  deleteGroup:function(db,id,callback){
+    this.getCollection(db).remove({_id:db.ObjectId(id)},function(err){
+      var saved=err==null;
+      if(!saved){
+        console.error(err);
+      }
+      if(callback!=null) callback(err,saved);
+
     });
-    callback(data.ok==1);
-    }
+
+  }
+
 }
 
 

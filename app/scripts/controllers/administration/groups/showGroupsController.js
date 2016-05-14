@@ -6,39 +6,17 @@ function showGroupsController($scope,$http,$location) {
   $scope.offsetCounter=0;
   $scope.filterName=undefined;
   $scope.hasMoreElements=false;
-  $scope.group={
-    name:'',
-    characters:[]
-  };
+  $scope.myGroups=[];
+
   //Busca al iniciar
-  search();
+  searchMarvelCharacters();
+  myGroups();
 
   //Comportamiento
-  $scope.onDropComplete=function(){
+  $scope.search=searchMarvelCharacters;
+  $scope.removeNewGroup=removeNewGroup;
 
-  }
-
-  $scope.onDragComplete=function(){
-
-  }
-
-  $scope.search=search;
-
-  $scope.addCharacter=function(event, ui){
-    var marvelCharacter=ui.draggable.scope().character;
-    $scope.group.characters.push({
-      marvel_id:marvelCharacter.id,
-      name:marvelCharacter.name,
-      thumbnail:marvelCharacter.thumbnail,
-    })
-  }
-
-  $scope.removeCharacter=function(marvelId){
-    $scope.group.characters=$scope.group.characters.filter(function(element){
-      return element.id!=marvelId;
-    })
-  }
-
+  //Obtiene mas resultados
   $scope.moreResults=function(){
     $scope.offsetCounter=$scope.offsetCounter+1;
     $http.get('/v1/marvel/characters',
@@ -57,9 +35,66 @@ function showGroupsController($scope,$http,$location) {
     })
   }
 
+  $scope.createNewGroup=function(){
+    $scope.group={
+      name:'',
+      characters:[]
+    };
+  }
+
+
+  function removeNewGroup(){
+    $scope.group=undefined;
+  }
+
+
+  //Obtiene mas resultados
+  $scope.saveGroup=function(group){
+    $http.post('/v1/groups',group
+    ).success(function(value){
+      myGroups();
+      removeNewGroup();
+      console.log('exito');
+    }).error(function(error){
+      console.error(error);
+    })
+  }
+
+  //Obtiene mas resultados
+  $scope.updateGroup=function(group){
+    $http.put('/v1/groups',group
+    ).success(function(value){
+      myGroups();
+      removeNewGroup();
+      console.log('exito');
+    }).error(function(error){
+      console.error(error);
+    })
+  }
+
+
+  $scope.removeGroup=function(group){
+    $http.delete('/v1/groups/'+group._id
+    ).success(function(){
+      myGroups();
+      console.log('exito');
+    }).error(function(error){
+      console.error(error);
+    })
+  }
+
 
   //Auxiliares
-  function search(){
+  function myGroups(){
+    $http.get('/v1/groups').success(function(value){
+      $scope.myGroups=value.response;
+      console.log('exito');
+    }).error(function(error){
+      console.error(error);
+    })
+  }
+
+  function searchMarvelCharacters(){
       $http.get('/v1/marvel/characters',
         { params: {
           limit:20,
