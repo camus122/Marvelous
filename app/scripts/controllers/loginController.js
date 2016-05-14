@@ -5,7 +5,7 @@ angular.module('loginApp', [])
   .controller('LoginController', function($scope,$http,$window) {
         $scope.user={};
         $scope.login=function(){
-          $http.post('/login', $scope.user).then(function(value){
+          $http.post('v1/login', $scope.user).then(function(value){
             console.log(value.data.response);
             $window.location.href='/marvelous';
           }, function(err){

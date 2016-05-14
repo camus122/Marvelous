@@ -1,4 +1,4 @@
-var app =angular.module('app', ['ngRoute','ngResource']);
+var app =angular.module('app', ['ngRoute','ngResource','ngDragDrop']);
 
 app.config(function($routeProvider) {
   $routeProvider.

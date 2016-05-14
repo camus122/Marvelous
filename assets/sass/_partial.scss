@@ -1,0 +1,39 @@
+
+$color-texto-img: black;
+
+$button-color-hover: GREEN;
+
+.contenedor-media-list{
+
+  .media{
+    width: 150px;
+    height: 150px;
+    float:  left;
+    img{
+      width: 100px;
+      height: 100px;
+    }
+    .button{
+      &:hover{
+        color: $button-color-hover;
+        cursor: pointer;
+      }
+    }
+    .texto{
+      color: $color-texto-img;
+    }
+  }
+}
+
+.contenedor-grupos{
+
+  .grupo{
+    .media{
+      img{
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+  }
+}

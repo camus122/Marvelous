@@ -6,7 +6,7 @@ angular.module('singupApp', [])
     $scope.user={};
 
     $scope.singup=function(){
-      $http.post('/users', $scope.user).then(function(value){
+      $http.post('v1/users', $scope.user).then(function(value){
         console.log(value.data.response);
       }, function(err){
         console.error(err.data.response);

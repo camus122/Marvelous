@@ -5,9 +5,70 @@
     <title>Title</title>
 </head>
 <body>
-  {{title}}
-  <a ng-href="#/addGroup">Agregar grupo</a>
-  <a ng-href="#/updateGroup/123">Modif grupo</a>
+
+
+  <div class="contenedor-media-list">
+
+    <div class="bs-example" data-example-id="basic-forms">
+      <form ng-submit="search()">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="filterName" placeholder="Tipea para filtrar <enter> para buscar -->">
+          <span class="input-group-addon">Buscar</span>
+          <button type="submit" ng-hide="true">just i need a submit</button>
+        </div>
+      </form>
+    </div>
+    <h1>Personajes</h1>
+    <div class="row">
+      <i class="media col-md-2 text-center" ng-repeat="character in characters | filter: {name:filterName}"  ng-model="character"  data-drag="true" data-jqyoui-options="{revert: 'invalid',helper: 'clone'}"  jqyoui-draggable="{animate:true}" >
+            <div class="form-group" ng-drag="true"  >
+              <img  ng-src="{{character.thumbnail.path+'.'+character.thumbnail.extension}}" alt="..." class="img-circle">
+            </div>
+            <div class="help-block texto">
+              <strong> {{character.name}}</strong>
+            </div>
+      </i>
+      <div class="media  col-md-1 text-center vcenter" ng-hide="characters.length == undefined || !hasMoreElements">
+        <i class="button fa fa-search-plus" aria-hidden="true" style="font-size: 100px" ng-click="moreResults()"></i>
+      </div>
+     </div>
+
+     <button type="button" class="btn btn-primary btn-lg center-block" ><i class="fa fa-plus fa-lg"> </i> Crear grupo</button>
+
+  </div>
+    <!-- CREACION DE GRUPO -->
+    <div class="contenedor-grupos">
+      <div class="grupo col-md-2">
+        <div class="form-group">
+          <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Nombre grupo" ng-model="grupo.nombre">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Personajes</label>
+        </div>
+        <div style="min-width: 200px; min-height: 80px;background-color: darkgray" jqyoui-droppable="{onDrop:'addCharacter'}" data-drop="true"  jqyoui-droppable="{multiple:true}"  >
+          <div  class="media " ng-drag="true"  ng-repeat="characterGroup in group.characters">
+              <img  ng-src="{{characterGroup.thumbnail.path+'.'+characterGroup.thumbnail.extension}}" alt="..." class="img-circle">
+              <strong> {{characterGroup.name}}</strong>
+          </div>
+        </div>
+
+        <!--<div class="form-group" ng-repeat="character in group.characters">-->
+          <!--<img  ng-src="{{character.thumbnail.path+'.'+character.thumbnail.extension}}" alt="..." class="img-circle">-->
+        <!--</div>-->
+      </div>
+
+      <!-- GRUPOS CREADOS -->
+      <!--<div class="grupo form-inline" ng-repeat="group in groups">-->
+        <!--<div class="form-group">-->
+          <!--<input type="text" class="form-control"  placeholder="Nombre grupo">-->
+
+        <!--</div>-->
+      <!--</div>-->
+
+    </div>
+
+
+
 
 </body>
 </html>

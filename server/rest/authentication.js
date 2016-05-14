@@ -38,9 +38,9 @@ module.exports=function(app,responseTypes,httpStatus){
 
     userHelper.validUser(db,data.email,data.password,function(err,isValid){
       if(isValid){
-        res.status(HttpStatus.OK).send(responseTypes.getResponse(HttpStatus.OK,responseTypes.SUCCESS,'Login exitoso!'));
+        res.status(httpStatus.OK).send(responseTypes.getResponse(httpStatus.OK,responseTypes.SUCCESS,'Login exitoso!'));
       }else{
-        res.status(HttpStatus.CONFLICT).send(responseTypes.getResponse(HttpStatus.CONFLICT,responseTypes.ERROR,'Usuario invalido'));
+        res.status(httpStatus.CONFLICT).send(responseTypes.getResponse(httpStatus.CONFLICT,responseTypes.ERROR,'Usuario invalido'));
       }
     })
   });
